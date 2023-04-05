@@ -1,13 +1,13 @@
 const populateSelection = () => {
-  const dropDown = document.querySelector(`#all`);
+  const dropdown = document.querySelector(`#all`);
 
   let fragment = document.createDocumentFragment();
   countries.forEach((country) => {
-    let option = document.createElement(`option`);
-    option.textContent = country.name.common;
-    fragment.appendChild(option);
+    let options = document.createElement(`option`);
+    options.textContent = country.name.common;
+    fragment.appendChild(options);
   });
-  dropDown.appendChild(fragment);
+  dropdown.appendChild(fragment);
 };
 
 const testFunction = () => {
@@ -41,13 +41,14 @@ let selectedCountry = countries[0];
 const loadEvent = () => {
   populateSelection();
 
-  const dropDown = document.querySelector(`#all`);
-  dropDown.addEventListener("change", (event) => {
+  const dropdown = document.querySelector(`#all`);
+  dropdown.addEventListener("change", (event) => {
     selectedCountry = countries.find(
       (country) => country.name.common === event.target.value
     );
     testFunction();
   });
+  
 };
 
 //2nd Task
