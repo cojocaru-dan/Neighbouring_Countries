@@ -27,8 +27,13 @@ const testFunction = () => {
   fragment.appendChild(regionElement);
   fragment.appendChild(subregionElement);
   fragment.appendChild(capitalElement);
-
-  document.querySelector(`#country`).appendChild(fragment);
+  if (document.querySelector(`#country`).firstChild) {
+    //delete all the elements
+    //push fragment
+  } else {
+    //just push fragment
+    document.querySelector(`#country`).appendChild(fragment);
+  }
 };
 
 let selectedCountry = countries[0];
