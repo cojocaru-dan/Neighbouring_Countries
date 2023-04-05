@@ -1,21 +1,21 @@
 const populateSelection = () => {
-  const dropDown = document.querySelector(`#all`);
+  const dropdown = document.querySelector(`#all`);
 
   let fragment = document.createDocumentFragment();
   countries.forEach((country) => {
-    let option = document.createElement(`option`);
-    option.textContent = country.name.common;
-    fragment.appendChild(option);
+    let options = document.createElement(`options`);
+    options.textContent = country.name.common;
+    fragment.appendChild(options);
   });
-  dropDown.appendChild(fragment);
+  dropdown.appendChild(fragment);
 };
 
 const loadEvent = () => {
   populateSelection();
 
 
-  const dropDown = document.querySelector(`#all`);
-  dropDown.addEventListener('onchange', (selection) => {console.log(selection.target.textContent)})
+  const dropdown = document.querySelector(`#all`);
+  dropdown.addEventListener('onchange', (selection) => {console.log(selection.target.textContent)})
 };
 
 
