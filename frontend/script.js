@@ -1,6 +1,8 @@
 const populateSelection = () => {
   const dropdown = document.querySelector(`#all`);
-
+  const placeholder = document.createElement("option");
+  placeholder.textContent = "Select a country from the list";
+  dropdown.appendChild(placeholder);
   let fragment = document.createDocumentFragment();
   countries.forEach((country) => {
     let options = document.createElement(`option`);
@@ -27,13 +29,17 @@ const testFunction = () => {
   fragment.appendChild(regionElement);
   fragment.appendChild(subregionElement);
   fragment.appendChild(capitalElement);
-  if (document.querySelector(`#country`).firstChild) {
+  console.log(document.querySelector(`#country`).hasChildNodes());
+  if (document.querySelector(`#country`).hasChildNodes()) {
+    const elementsToDelete = document.querySelectorAll("main > img, h1, h2, h3, h4");
+    elementsToDelete.forEach((elem) => {
+        elem.remove();
+    })
     //delete all the elements
     //push fragment
-  } else {
-    //just push fragment
-    document.querySelector(`#country`).appendChild(fragment);
   }
+    //just push fragment
+  document.querySelector(`#country`).appendChild(fragment);
 };
 
 let selectedCountry = countries[0];
