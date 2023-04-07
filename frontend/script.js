@@ -66,12 +66,28 @@ let selectedCountry = countries[0];
 // Get the neighbour with the largest population
 const largestPopulation = () =>{
   let largestPopulationCountry; 
+
+
+  if(!selectedCountry.hasOwnProperty("borders")){
+    console.error("eroare frate");
+    const err = document.querySelector("#toolbar");
+    err.insertAdjacentHTML("beforeend",addElement("p","Has no neightbours!"));
+    const deletePara = document.querySelectorAll("p");
+    setTimeout( function ( ) {
+      deletePara.forEach(para => {
+        para.remove()
+      })}, 1500 );
+  }
+
+
   // Iterate through the borders key of selected country
   for (const border of selectedCountry.borders) {
     // Search and return the country object if it is a neighbour
     const neightbourCountry = countries.find((elem) => {
       return elem.cca3 === border;
     });
+
+
 
     if(!largestPopulationCountry){
       largestPopulationCountry = neightbourCountry;
@@ -87,6 +103,18 @@ const largestPopulation = () =>{
 
 const largestArea = () => {
   let largestAreaCountry; 
+
+  if(!selectedCountry.hasOwnProperty("borders")){
+    console.error("eroare frate");
+    const err = document.querySelector("#toolbar");
+    err.insertAdjacentHTML("beforeend",addElement("p","Has no neightbours!"));
+    const deletePara = document.querySelectorAll("p");
+    setTimeout( function ( ) {
+      deletePara.forEach(para => {
+        para.remove()
+      })}, 1500 );
+  }
+  
   for (const border of selectedCountry.borders) {
     const neightbourCountry = countries.find((elem) => {
       return elem.cca3 === border;
