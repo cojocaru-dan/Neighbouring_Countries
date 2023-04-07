@@ -29,13 +29,8 @@ const createAndAppendFragment = (country) => {
   let subregionElement = document.createElement(`h3`);
   subregionElement.textContent = country.subregion;
   let capitalElement = document.createElement(`h4`);
-<<<<<<< HEAD
-  capitalElement.textContent = selectedCountry.capital;
-  
-=======
   capitalElement.textContent = country.capital;
   //append the html elements to the fragment
->>>>>>> b7385c62589c3143c816bc5d37a1433a8752dc6f
   fragment.appendChild(imageElement);
   fragment.appendChild(commonName);
   fragment.appendChild(regionElement);
@@ -56,42 +51,8 @@ const createAndAppendFragment = (country) => {
   document.querySelector(`#country`).appendChild(fragment);
 };
 
-<<<<<<< HEAD
-let selectedCountry = countries[0];
-
-
-const largestPopulation = () =>{
-  if(document.querySelector(`#country`).hasChildNodes()){
-    document.querySelector(`#population`).removeAttribute("hidden");
-  }
-  let largestPopulationCountry; 
-  for (const border of selectedCountry.borders) {
-    const neightbourCountry = countries.find((elem) => {
-      return elem.cca3 === border;
-    });
-    console.log("neighbourCountry",neightbourCountry);
-
-    if(!largestPopulationCountry){
-      largestPopulationCountry = neightbourCountry;
-    }else if(neightbourCountry.population > largestPopulationCountry.population){
-      largestPopulationCountry = neightbourCountry;
-    }
-  }
-  console.log("largestPopulationCountry",largestPopulationCountry);
-
-
-  
-}
-
-
-
-const loadEvent = () => {
-  populateSelection();
-
-=======
 const showCountries = () => {
   //select the dropdown menu
->>>>>>> b7385c62589c3143c816bc5d37a1433a8752dc6f
   const dropdown = document.querySelector(`#all`);
   //add a change event listener to the dropdown menu(if the value changes, it'll fire)
   //addEventListener has an anonymous wich sets the selectedCountry variable to the country(objec) we selected
@@ -100,19 +61,6 @@ const showCountries = () => {
     selectedCountry = countries.find(
       (country) => country.name.common === event.target.value
     );
-<<<<<<< HEAD
-    testFunction();
-    largestPopulation();
-
-
-    
-    if(document.querySelector(`#country`).hasChildNodes()){
-      document.querySelector(`#area`).removeAttribute("hidden");
-    }
-  });
-  
-}
-=======
     console.log(selectedCountry);
     createAndAppendFragment(selectedCountry);
   });
@@ -127,7 +75,6 @@ const loadEvent = () => {
   showCountries();
   
 };
->>>>>>> b7385c62589c3143c816bc5d37a1433a8752dc6f
 
 
 //Adding a load eventlistener to the window wich fires once the site is fully loaded.
