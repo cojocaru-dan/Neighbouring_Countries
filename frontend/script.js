@@ -17,26 +17,26 @@ const populateSelection = () => {
   dropdown.appendChild(fragment);
 };
 
-const createAndAppendFragment = () => {
+const createAndAppendFragment = (country) => {
   //create an empty fragment and the elements we have to display
   let fragment = document.createDocumentFragment();
   let imageElement = document.createElement(`img`);
-  imageElement.src = selectedCountry.flags.png;
+  imageElement.src = country.flags.png;
   let commonName = document.createElement(`h1`);
-  commonName.textContent = selectedCountry.name.common;
+  commonName.textContent = country.name.common;
   let regionElement = document.createElement(`h2`);
-  regionElement.textContent = selectedCountry.region;
+  regionElement.textContent = country.region;
   let subregionElement = document.createElement(`h3`);
-  subregionElement.textContent = selectedCountry.subregion;
+  subregionElement.textContent = country.subregion;
   let capitalElement = document.createElement(`h4`);
-  capitalElement.textContent = selectedCountry.capital;
+  capitalElement.textContent = country.capital;
   //append the html elements to the fragment
   fragment.appendChild(imageElement);
   fragment.appendChild(commonName);
   fragment.appendChild(regionElement);
   fragment.appendChild(subregionElement);
   fragment.appendChild(capitalElement);
-  console.log(document.querySelector(`#country`).hasChildNodes());
+  // console.log(document.querySelector(`#country`).hasChildNodes());
   //Checking if we already have a country displayed
   //If we do, we delete all the child nodes and append the new country fragment after
   if (document.querySelector(`#country`).hasChildNodes()) {
@@ -61,7 +61,8 @@ const showCountries = () => {
     selectedCountry = countries.find(
       (country) => country.name.common === event.target.value
     );
-    createAndAppendFragment();
+    console.log(selectedCountry);
+    createAndAppendFragment(selectedCountry);
   });
   
 }
