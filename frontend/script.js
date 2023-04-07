@@ -12,18 +12,18 @@ const populateSelection = () => {
   dropdown.appendChild(fragment);
 };
 
-const testFunction = () => {
+const testFunction = (country) => {
   let fragment = document.createDocumentFragment();
   let imageElement = document.createElement(`img`);
-  imageElement.src = selectedCountry.flags.png;
+  imageElement.src = country.flags.png;
   let commonName = document.createElement(`h1`);
-  commonName.textContent = selectedCountry.name.common;
+  commonName.textContent = country.name.common;
   let regionElement = document.createElement(`h2`);
-  regionElement.textContent = selectedCountry.region;
+  regionElement.textContent = country.region;
   let subregionElement = document.createElement(`h3`);
-  subregionElement.textContent = selectedCountry.subregion;
+  subregionElement.textContent = country.subregion;
   let capitalElement = document.createElement(`h4`);
-  capitalElement.textContent = selectedCountry.capital;
+  capitalElement.textContent = country.capital;
   fragment.appendChild(imageElement);
   fragment.appendChild(commonName);
   fragment.appendChild(regionElement);
@@ -42,6 +42,7 @@ const testFunction = () => {
   document.querySelector(`#area`).removeAttribute("hidden");
     //just push fragment
   document.querySelector(`#country`).appendChild(fragment);
+  selectedCountry = country;
 };
 
 let selectedCountry = countries[0];
@@ -53,6 +54,7 @@ const largestPopulation = () =>{
       return elem.cca3 === border;
     });
     console.log("neightbour",neightbourCountry);
+    console.log("largestPop",neightbourCountry.population);
     if(!largestPopulationCountry){
       largestPopulationCountry = neightbourCountry;
     }else if(neightbourCountry.population > largestPopulationCountry.population){
@@ -60,6 +62,26 @@ const largestPopulation = () =>{
     }
   }
   console.log("largestPop",largestPopulationCountry);
+  return largestPopulationCountry;
+}
+
+const largestArea = () =>{
+  let largestAreaCountry; 
+  for (const border of selectedCountry.borders) {
+    const neightbourCountry = countries.find((elem) => {
+      return elem.cca3 === border;
+    });
+    console.log("neightbour",neightbourCountry);
+    console.log("largestArea",neightbourCountry.area);
+    if(!largestAreaCountry){
+      largestAreaCountry = neightbourCountry;
+    }else if(neightbourCountry.area > largestAreaCountry.area){
+      largestAreaCountry = neightbourCountry;
+    }
+  }
+  console.log("largestArea",largestAreaCountry);
+  
+  return largestAreaCountry;
 }
 
 const loadEvent = () => {
@@ -70,9 +92,19 @@ const loadEvent = () => {
     selectedCountry = countries.find(
       (country) => country.name.common === event.target.value
     );
-    testFunction();
-    largestPopulation();
+    testFunction(selectedCountry);
   });
+
+  const largestPopButton = document.querySelector(`#population`);
+  largestPopButton.addEventListener("click", (event) => {
+    testFunction(largestPopulation());
+  })
+
+  const largestAreaButton = document.querySelector(`#area`);
+  largestAreaButton.addEventListener("click", (event) => {
+    testFunction(largestArea());
+  })
+
 };
 
 //2nd Task
