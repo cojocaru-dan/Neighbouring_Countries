@@ -24,6 +24,7 @@ const testFunction = () => {
   subregionElement.textContent = selectedCountry.subregion;
   let capitalElement = document.createElement(`h4`);
   capitalElement.textContent = selectedCountry.capital;
+  
   fragment.appendChild(imageElement);
   fragment.appendChild(commonName);
   fragment.appendChild(regionElement);
@@ -44,6 +45,32 @@ const testFunction = () => {
 
 let selectedCountry = countries[0];
 
+
+const largestPopulation = () =>{
+  if(document.querySelector(`#country`).hasChildNodes()){
+    document.querySelector(`#population`).removeAttribute("hidden");
+  }
+  let largestPopulationCountry; 
+  for (const border of selectedCountry.borders) {
+    const neightbourCountry = countries.find((elem) => {
+      return elem.cca3 === border;
+    });
+    console.log("neighbourCountry",neightbourCountry);
+
+    if(!largestPopulationCountry){
+      largestPopulationCountry = neightbourCountry;
+    }else if(neightbourCountry.population > largestPopulationCountry.population){
+      largestPopulationCountry = neightbourCountry;
+    }
+  }
+  console.log("largestPopulationCountry",largestPopulationCountry);
+
+
+  
+}
+
+
+
 const loadEvent = () => {
   populateSelection();
 
@@ -53,9 +80,16 @@ const loadEvent = () => {
       (country) => country.name.common === event.target.value
     );
     testFunction();
+    largestPopulation();
+
+
+    
+    if(document.querySelector(`#country`).hasChildNodes()){
+      document.querySelector(`#area`).removeAttribute("hidden");
+    }
   });
   
-};
+}
 
 //2nd Task
 //Add eventlistener to the selec html element (onchange event => rule function wich returns the correct contry object. (data.find(elemen) => element.name.common === event.target.value)))
