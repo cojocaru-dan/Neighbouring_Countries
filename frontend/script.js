@@ -16,10 +16,15 @@ const populateSelection = () => {
     fragment.appendChild(options);
   });
   dropdown.appendChild(fragment);
+
+  const selectForTranslations = document.createElement("select");
+  selectForTranslations.setAttribute("hidden", "true");
+  document.querySelector("#toolbar").insertAdjacentElement("afterbegin", selectForTranslations);
 };
 
 // Create fragment and div where the countries are displayed in the main section 
 const displayMainSection = (country, oddElement) => {
+  console.log(country);
   // Create elements for the countries: flag image, common name, region, subregion, capital
   let fragment = document.createDocumentFragment();
   let imageElement = document.createElement(`img`);
@@ -47,10 +52,40 @@ const displayMainSection = (country, oddElement) => {
   };
   // Show the selected country in the main section 
   document.querySelector(`#country`).appendChild(fragment);
-
+  const lastTranslationKey = document.querySelector("nav > select:first-child").value;
+  console.log(country.translations[lastTranslationKey]);
+  if (document.querySelectorAll("#toolbar > select:first-child option").length > 0) {
+    document.querySelectorAll("#toolbar > select:first-child option").forEach((singleOption) => {
+      singleOption.remove();
+    })
+  };
+  if (document.querySelector(`#country`).hasChildNodes()) {
+    const selectedName = document.querySelector("main > h1").textContent;
+    const countryForTranslations = countries.find((element) => {
+      return element.name.common === selectedName
+    });
+    const defaultOption = document.createElement("option");
+    defaultOption.id = "default";
+    defaultOption.textContent = "Select a Translation";
+    document.querySelector("#toolbar > select:first-child").appendChild(defaultOption);
+    for (const key in countryForTranslations.translations) {
+      const option = document.createElement("option");
+      option.textContent = key;
+      const firstSelect = document.querySelector("#toolbar > select:first-child");
+      firstSelect.appendChild(option);
+    }
+    if (Object.keys(country.translations).includes(lastTranslationKey)) {
+      document.querySelector("nav > select:first-child").value = lastTranslationKey;
+    };
+    if (lastTranslationKey !== defaultOption.textContent && lastTranslationKey !== "") {
+      document.querySelector("main > h1").textContent = country.translations[lastTranslationKey].common;
+    }
+  }
   // Show the largest population and area buttons when a country is selected
+  
   document.querySelector(`#population`).removeAttribute("hidden");
   document.querySelector(`#area`).removeAttribute("hidden");
+  document.querySelector("#toolbar > select:first-child").removeAttribute("hidden");
 
   // If country has a neighbour, selected country becomes that neighbour and displays it  
   selectedCountry = country;
@@ -71,7 +106,7 @@ const largestPopulation = () =>{
   if(!selectedCountry.hasOwnProperty("borders")){
     console.error("eroare frate");
     const err = document.querySelector("#toolbar");
-    err.insertAdjacentHTML("beforeend",addElement("p","Has no neightbours!"));
+    err.insertAdjacentHTML("beforeend",addElement("p","The country has no neighbours."));
     const deletePara = document.querySelectorAll("p");
     setTimeout( function ( ) {
       deletePara.forEach(para => {
@@ -107,7 +142,7 @@ const largestArea = () => {
   if(!selectedCountry.hasOwnProperty("borders")){
     console.error("eroare frate");
     const err = document.querySelector("#toolbar");
-    err.insertAdjacentHTML("beforeend",addElement("p","Has no neightbours!"));
+    err.insertAdjacentHTML("beforeend",addElement("p","The country has no neighbours."));
     const deletePara = document.querySelectorAll("p");
     setTimeout( function ( ) {
       deletePara.forEach(para => {
@@ -222,6 +257,12 @@ const loadEvent = () => {
     };
 
     displayMainSection(countryFromVisitedArray(), false); 
+  });
+
+  const firstSelect = document.querySelector("#toolbar > select:first-child");
+  firstSelect.addEventListener("change", (event) => {
+    document.querySelector("main > h1").textContent = selectedCountry.translations[event.target.value].common;
+    console.log(selectedCountry.translations[event.target.value].common);
   });
 };
 
