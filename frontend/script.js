@@ -1,6 +1,10 @@
 // Function to create html elements
 const addElement = (tag, inner, id) => {
-  return `<${tag} id=${id}> ${inner} </${tag}>`;
+  if (tag === "button") {
+    return `<${tag} id=${id} class="btn btn-info"> ${inner} </${tag}>`;
+  } else {
+    return `<${tag} id=${id}> ${inner} </${tag}>`;
+  }
 }
 
 // Function to populate the dropdown list with the countries in the data.js
@@ -81,6 +85,11 @@ const displayMainSection = (country, oddElement) => {
       document.querySelector("main > h1").textContent = country.translations[lastTranslationKey].common;
     }
   }
+
+  // add style to translations dropdown
+  document.querySelector("#toolbar > select:first-child").setAttribute("class", "d-flex flex-column flex-md-row p-4 gap-4 py-md-2 align-items-center justify-content-center");
+  document.querySelector("#toolbar > select:first-child").setAttribute("data-bs-theme", "dark");
+  
   // Show the largest population and area buttons when a country is selected
   
   document.querySelector(`#population`).removeAttribute("hidden");
@@ -106,7 +115,7 @@ const largestPopulation = () =>{
   if(!selectedCountry.hasOwnProperty("borders")){
     console.error("eroare frate");
     const err = document.querySelector("#toolbar");
-    err.insertAdjacentHTML("beforeend",addElement("p","The country has no neighbours."));
+    err.insertAdjacentHTML("beforeend",addElement("p","The country has no neighbours.", "error"));
     const deletePara = document.querySelectorAll("p");
     setTimeout( function ( ) {
       deletePara.forEach(para => {
@@ -142,7 +151,7 @@ const largestArea = () => {
   if(!selectedCountry.hasOwnProperty("borders")){
     console.error("eroare frate");
     const err = document.querySelector("#toolbar");
-    err.insertAdjacentHTML("beforeend",addElement("p","The country has no neighbours."));
+    err.insertAdjacentHTML("beforeend",addElement("p","The country has no neighbours.", "error"));
     const deletePara = document.querySelectorAll("p");
     setTimeout( function ( ) {
       deletePara.forEach(para => {
